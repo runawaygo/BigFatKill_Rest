@@ -265,5 +265,5 @@ app.post('/resetrobots',function(req,res){
 	resetRobots();
 });
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8000;
 app.listen(port);

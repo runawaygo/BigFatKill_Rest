@@ -52,16 +52,13 @@ function getUserLatLng()
 	
 }
 
-function onSuccess(position) {
+function initScene(position) {
     //    longitude = position.coords.longitude + (getRandom(100)-50) * 0.0001;
     //    latitude = position.coords.latitude + (getRandom(100)-50) * 0.0001;;
 
 	createCoreUser();
     userinfo.longitude = position.coords.longitude;
     userinfo.latitude = position.coords.latitude;
-	console.log(userinfo.longitude);
-	console.log(userinfo.latitude);
-	
 	
     createMap();
 	setControl();
@@ -269,21 +266,6 @@ function getEnemies()
     1000);
 }
 
-function beginGetEnemies()
-{
-	setTimeout(function() {
-        service.enemies(function(e) {
-			enemies = e;
-            setEnemies();
-			setVaio(enemies.vaio);
-			beginGetEnemies();
-        });
-    },
-    1000);
-    
-}
-
-
 function createCoreUser()
 {
 	userinfo = {
@@ -405,47 +387,14 @@ function onError(error) {
     'message: ' + error.message + '\n');
 }
 
-function onBodyLoad() {
-    // do your thing!
-    try
-    {
-        service = getService();
-		$('#control').hide();
-		$('#start-layer').show();
-		
-		$('#bottom-banner').click(function(){
-			$('#control').toggle(200);
-		});
-		
-		$('#start-get-btn').click(function(){
-			$('#start-layer').hide();
-		})
-		
-		
-		$('#top-banner').click(function(){
-			if(isVaio) 
-			{
-				$('#win-layer').show();
-			}
-		});
-		
-		
-		$('#win-layer').click(function(){
-			$('#win-layer').hide();
-		});
+function initGame()
+{
+	service = getService();
+	//navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	var position = {};
+	position.coords={};
+	position.coords.longitude =  121.5168662;
+	position.coords.latitude = 31.2380048;
 
-		
-		var position = {};
-		position.coords={};
-		position.coords.longitude =  121.5168662;
-		position.coords.latitude = 31.2380048;
-		
-		onSuccess(position);
-		
-        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }
-    catch(exp)
-    {
-        alert(exp);
-    }
+	initScene(position);
 }
